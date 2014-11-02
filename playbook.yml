@@ -1,0 +1,32 @@
+---
+- hosts: all
+  sudo: true
+
+  pre_tasks:
+    - name: Add backports for node.js
+      apt_repository: repo='deb http://ftp.us.debian.org/debian wheezy-backports main' state=present
+
+    - name: Install curl
+      apt: pkg=curl state=present update_cache=true
+
+    - name: Install node.js
+      apt: pkg=nodejs state=present update_cache=true
+
+    - name: Install nodejs-legacy (needed to run node as an executable)
+      apt: pkg=nodejs-legacy state=present
+
+    - name: Install npm
+      shell: '/usr/bin/curl --insecure https://www.npmjs.org/install.sh | /bin/bash creates=/usr/bin/npm'
+
+    - name: Install git
+      apt: pkg=build-essential state=present
+
+    - name: Install git
+      apt: pkg=git state=present
+
+    - name: Install mercurial
+      apt: pkg=mercurial state=present
+
+  roles:
+    - ansible-go
+    - ansible-housemon

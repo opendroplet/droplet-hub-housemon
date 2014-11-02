@@ -1,0 +1,5 @@
+---
+housemon_repo_location: "https://github.com/jcw/housemon.git"
+housemon_repo_tag: "v0.9.0"
+jeebus_repo_location: "https://github.com/jcw/jeebus.git"
+jeebus_repo_tag: "v0.3.0"

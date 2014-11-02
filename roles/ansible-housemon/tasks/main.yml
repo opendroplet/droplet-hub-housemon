@@ -1,0 +1,41 @@
+---
+- name: Clone jeebus {{ jeebus_repo_tag }} tag 
+  git: repo={{ jeebus_repo_location }} dest=/home/vagrant/go/src/github.com/jcw/jeebus version={{ jeebus_repo_tag }}
+
+- name: Clone housemon {{ housemon_repo_tag }} tag 
+  git: repo={{ housemon_repo_location }} dest=/home/vagrant/go/src/github.com/jcw/housemon version={{ housemon_repo_tag }}
+
+- name: Go get jeebus
+  command: go get chdir=/home/vagrant/go/src/github.com/jcw/jeebus
+
+- name: Install lua5.1-dev
+  apt: pkg=lua5.1-dev state=present
+
+- name: Run jeebus
+  command: '"go run main.go" chdir=/home/vagrant/go/src/github.com/jcw/jeebus/example'
+
+- name: Install bower
+  command: npm install -g bower
+
+- name: Install housemon dependencies
+  command: npm install chdir=/home/vagrant/go/src/github.com/jcw/housemon
+
+- name: Install housemon bower dependencies manually (they are not installed automatically as they should)
+  command: bower install raphael chdir=/home/vagrant/go/src/github.com/jcw/housemon
+
+- name: Install housemon bower dependencies manually
+  command: bower install bower-foundation-css chdir=/home/vagrant/go/src/github.com/jcw/housemon
+
+- name: Install housemon bower dependencies manually
+  command: bower install foundation chdir=/home/vagrant/go/src/github.com/jcw/housemon
+
+- name: Install housemon bower dependencies manually
+  command: bower install angular-animate chdir=/home/vagrant/go/src/github.com/jcw/housemon
+
+# vagrant@debian-7:~/go/src/github.com/jcw/housemon$ go get -u github.com/jcw/housemon
+# vagrant@debian-7:~/go/src/github.com/jcw/housemon$ go build -a github.com/jcw/housemon
+# vagrant@debian-7:~/go/src/github.com/jcw/jeebus$ git checkout v0.2.0 
+# vagrant@debian-7:~/go/src/github.com/jcw/jeebus/jb$ go get 
+
+- name: Run housemon
+  command: node . chdir=/home/vagrant/go/src/github.com/jcw/housemon
